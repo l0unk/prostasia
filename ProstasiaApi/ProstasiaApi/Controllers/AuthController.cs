@@ -7,8 +7,15 @@ namespace ProstasiaApi.Controllers
     public class LoginController : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult> Login()
+        public async Task<ActionResult> Login([FromForm] string username, string inputpass)
         {
+            string password = await Database.GetUserPassword(username);
+
+            if (inputpass == password)
+            {
+                return Ok();
+            }
+            
             
 
             return Ok();

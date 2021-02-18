@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.IO;
@@ -7,13 +8,13 @@ namespace ProstasiaApi
 {
     public class Database
     {
-        public string LoadConnStr()
+        private static string LoadConnStr()
         {
             string[] connStrArr = File.ReadAllLines("conn.txt");
             return connStrArr[0];
         }
         
-        public async Task<string> GetUserPassword(string username)
+        public static async Task<string> GetUserPassword(string username)
         {
             MongoClient dbClient = new MongoClient(LoadConnStr());
             var db = dbClient.GetDatabase("Prostasia");
