@@ -1,2 +1,7 @@
 conn.txt
+<<<<<<< HEAD
 bin/
+=======
+bin/
+obj/
+>>>>>>> 3acfdf1fc8f0881f72b1ac2626da86a000320ada

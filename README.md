@@ -1,2 +1,2 @@
-# prostasia
-Password manager side project
+# Prostasia
+A simple password manager powered by C# and React Native
