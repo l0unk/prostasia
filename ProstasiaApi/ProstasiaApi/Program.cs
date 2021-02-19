@@ -22,6 +22,7 @@ namespace ProstasiaApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("https://192.168.178.69:8989");
                 });
     }
 }
