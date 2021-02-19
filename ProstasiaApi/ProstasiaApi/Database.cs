@@ -8,6 +8,14 @@ namespace ProstasiaApi
 {
     public class Database
     {
+
+        private static MongoClient dbClient;
+
+        public static void connect()
+        {
+            dbClient = new MongoClient(LoadConnStr());
+        }
+
         private static string LoadConnStr()
         {
             string[] connStrArr = File.ReadAllLines("conn.txt");
@@ -16,7 +24,6 @@ namespace ProstasiaApi
         
         public static async Task<string> GetUserPassword(User user)
         {
-            MongoClient dbClient = new MongoClient(LoadConnStr());
             var db = dbClient.GetDatabase("Prostasia");
             var collection = db.GetCollection<BsonDocument>("Users");
             var filter = Builders<BsonDocument>.Filter.Eq("username", user.username);
