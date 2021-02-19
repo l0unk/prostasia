@@ -22,7 +22,7 @@ class App extends React.Component {
 
   handleSubmit = () => {
     const {user} = this.state;
-    fetch('https://brood.pagekite.me:5001/api/auth/login', {
+    fetch('https://localhost:5001/api/auth/login', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
