@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lounk\\Documents\\code\\webdev\\prostasia\\ProstasiaApi\\ProstasiaApi\\ProstasiaApi.csproj": {}
+    "D:\\Documents\\Resources\\Projects\\Prostasia\\ProstasiaApi\\ProstasiaApi\\ProstasiaApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lounk\\Documents\\code\\webdev\\prostasia\\ProstasiaApi\\ProstasiaApi\\ProstasiaApi.csproj": {
+    "D:\\Documents\\Resources\\Projects\\Prostasia\\ProstasiaApi\\ProstasiaApi\\ProstasiaApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lounk\\Documents\\code\\webdev\\prostasia\\ProstasiaApi\\ProstasiaApi\\ProstasiaApi.csproj",
+        "projectUniqueName": "D:\\Documents\\Resources\\Projects\\Prostasia\\ProstasiaApi\\ProstasiaApi\\ProstasiaApi.csproj",
         "projectName": "ProstasiaApi",
-        "projectPath": "C:\\Users\\lounk\\Documents\\code\\webdev\\prostasia\\ProstasiaApi\\ProstasiaApi\\ProstasiaApi.csproj",
-        "packagesPath": "C:\\Users\\lounk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lounk\\Documents\\code\\webdev\\prostasia\\ProstasiaApi\\ProstasiaApi\\obj\\",
+        "projectPath": "D:\\Documents\\Resources\\Projects\\Prostasia\\ProstasiaApi\\ProstasiaApi\\ProstasiaApi.csproj",
+        "packagesPath": "C:\\Users\\gstpsk\\.nuget\\packages\\",
+        "outputPath": "D:\\Documents\\Resources\\Projects\\Prostasia\\ProstasiaApi\\ProstasiaApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\lounk\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\gstpsk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -57,16 +59,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.10, 3.1.10]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.12, 3.1.12]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

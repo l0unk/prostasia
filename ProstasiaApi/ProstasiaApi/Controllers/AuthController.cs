@@ -26,5 +26,12 @@ namespace ProstasiaApi.Controllers
 
             return StatusCode(403);
         }
+        
+        [Route("/api/test")]
+        [HttpGet]
+        public async Task<ActionResult> Test()
+        {
+            return Ok("The test was successfully tested.");
+        }
     }
 }
