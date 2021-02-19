@@ -14,6 +14,7 @@ namespace ProstasiaApi
         public static void Main(string[] args)
         {
             SessionManager.Start();
+            Database.connect();
             CreateHostBuilder(args).Build().Run();
         }
 
