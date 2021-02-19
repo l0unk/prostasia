@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KhtgsPn/ROTofUfqyAQ7TEAsxjbJX+d7jhhAEzyAzeSZgi5eYOXqOommI5XEvj/CsdcmS5Hg1iJ+Bm3KZedb4w==",
+  "dgSpecHash": "MZuJTxZCCMOsmg4ByUfh1aoCmt12cXbB6bUCF75esdKwK8QTLSchwhti4As3ZHRNOTCncBokq74nocKx3dCFqg==",
   "success": true,
   "projectFilePath": "D:\\Documents\\Resources\\Projects\\Prostasia\\ProstasiaApi\\ProstasiaApi\\ProstasiaApi.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,7 @@
     "C:\\Users\\gstpsk\\.nuget\\packages\\mongodb.driver.core\\2.11.6\\mongodb.driver.core.2.11.6.nupkg.sha512",
     "C:\\Users\\gstpsk\\.nuget\\packages\\mongodb.libmongocrypt\\1.0.0\\mongodb.libmongocrypt.1.0.0.nupkg.sha512",
     "C:\\Users\\gstpsk\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
+    "C:\\Users\\gstpsk\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\gstpsk\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\gstpsk\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\gstpsk\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

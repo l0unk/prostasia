@@ -7,25 +7,45 @@ namespace ProstasiaApi
 {
     public class SessionManager
     {
-        private static Dictionary<string, object> tokenList { get; set; }
+        private static Dictionary<string, User> tokenList { get; set; }
+
+        public static void Start()
+        {
+            tokenList = new Dictionary<string, User>();
+        }
 
         public static string CreateToken(User user)
         {
-            if (!tokenList.ContainsValue(user))
+            foreach (User result in tokenList.Values)
+            {
+                if (result.username == user.username)
+                {
+                    return tokenList.First(x => x.Value.username == user.username).Key;
+                }
+            }
+            
+            foreach (User kank in tokenList.Values)
+            {
+                Console.WriteLine(kank.username);
+            }
+            Console.WriteLine($"user with username {user.username} does not hab token.");
+            string token;
+            while (true)
             {
                 using var csprng = new RNGCryptoServiceProvider();
                 var bytes = new byte[16];
                 csprng.GetNonZeroBytes(bytes);
-                string token = string.Join("", bytes.Select(b => b.ToString("x2")));
-                
-                tokenList.Add(token, user);
-            }
-            else
-            {
-                return tokenList.FirstOrDefault(x => x.Value == user).Key;
-            }
+                token = string.Join("", bytes.Select(b => b.ToString("x2")));
 
-            return null;
+                if (!tokenList.ContainsKey(token))
+                {
+                    break;
+                }
+            }
+            tokenList.Add(token, user);
+            Console.WriteLine("added user: " + user.username);
+            return token;
+            
         }
         
         public static void DeleteToken(string token)

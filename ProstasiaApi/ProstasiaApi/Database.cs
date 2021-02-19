@@ -14,12 +14,12 @@ namespace ProstasiaApi
             return connStrArr[0];
         }
         
-        public static async Task<string> GetUserPassword(string username)
+        public static async Task<string> GetUserPassword(User user)
         {
             MongoClient dbClient = new MongoClient(LoadConnStr());
             var db = dbClient.GetDatabase("Prostasia");
             var collection = db.GetCollection<BsonDocument>("Users");
-            var filter = Builders<BsonDocument>.Filter.Eq("username", username);
+            var filter = Builders<BsonDocument>.Filter.Eq("username", user.username);
             var result = collection.Find(filter).FirstOrDefault();
             if (result != null)
             {

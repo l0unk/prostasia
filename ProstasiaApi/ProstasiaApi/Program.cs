@@ -13,6 +13,7 @@ namespace ProstasiaApi
     {
         public static void Main(string[] args)
         {
+            SessionManager.Start();
             CreateHostBuilder(args).Build().Run();
         }
 
