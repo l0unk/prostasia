@@ -3,7 +3,7 @@
   "expoServerPort": 19000,
   "packagerPort": 19000,
   "webpackServerPort": 19006,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://5q-u3h.lounk.prostasia-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.5q-u3h.lounk.prostasia-app.exp.direct",
+  "ngrokPid": 115896
 }
