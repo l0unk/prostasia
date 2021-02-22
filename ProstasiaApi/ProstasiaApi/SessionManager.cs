@@ -14,6 +14,21 @@ namespace ProstasiaApi
             tokenList = new Dictionary<string, User>();
         }
 
+        public static Dictionary<string, User> GetTokenList()
+        {
+            return tokenList;
+        }
+
+        public static User Authenticate(string token)
+        {
+            if (GetTokenList().ContainsKey(token))
+            {
+                return GetTokenList()[token];
+            }
+
+            return null;
+        }
+
         public static string CreateToken(User user)
         {
             foreach (User result in tokenList.Values)
