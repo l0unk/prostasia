@@ -18,6 +18,8 @@ namespace ProstasiaApi.Controllers
                 if (user.password == password)
                 {
                     string token = SessionManager.CreateToken(user);
+                    user.session_vars.Add("username", user.username);
+                    Response.Cookies.Append("session", token);
                     return Ok(token);
                 }
 
@@ -32,6 +34,6 @@ namespace ProstasiaApi.Controllers
         public async Task<ActionResult> Test()
         {
             return Ok("The test was successfully tested.");
-        }
+        }   
     }
 }
