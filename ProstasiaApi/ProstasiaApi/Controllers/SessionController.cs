@@ -21,8 +21,16 @@ namespace ProstasiaApi.Controllers
         [HttpGet]
         public async Task<ActionResult>  GetVariables()
         {
-            string token = Request.Cookies["session"];
-            User user = SessionManager.GetTokenList().Where(x => x.Key.Equals(token)).First().Value;
+            if (Request.Cookies["session"] == null)
+            {
+                return StatusCode(400);
+            }
+            User user = SessionManager.Authenticate(Request.Cookies["session"]);
+            Console.WriteLine(Request.Cookies["session"]);
+            if (user == null)
+            {
+                return StatusCode(403);
+            }
             ContentResult content = new ContentResult();
             content.Content = JsonConvert.SerializeObject(user.session_vars);
             content.ContentType = "application/json";
@@ -48,7 +56,6 @@ namespace ProstasiaApi.Controllers
 
             foreach (JProperty key in thingie.Properties())
             {
-                bool knownKey = false;
                 if (user.session_vars.ContainsKey(key.Name))
                 {
                     user.session_vars[key.Name] = key.Value;

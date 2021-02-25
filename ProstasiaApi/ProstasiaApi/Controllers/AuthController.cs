@@ -34,6 +34,19 @@ namespace ProstasiaApi.Controllers
         public async Task<ActionResult> Test()
         {
             return Ok("The test was successfully tested.");
-        }   
+        }
+
+        [Route("/api/auth")]
+        [HttpGet]
+        public async Task<ActionResult> Authorize()
+        {
+            String token = Request.Cookies["session"];
+            if (token != null && SessionManager.Authenticate(token) != null)
+            {
+                return StatusCode(200);
+            }
+
+            return StatusCode(403);
+        }
     }
 }

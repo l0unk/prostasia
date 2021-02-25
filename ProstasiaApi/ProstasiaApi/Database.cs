@@ -36,5 +36,10 @@ namespace ProstasiaApi
                 return null;
             }
         }
+
+        public static IMongoDatabase Getdb()
+        {
+            return dbClient.GetDatabase("Prostasia");
+        }
     }
 }
