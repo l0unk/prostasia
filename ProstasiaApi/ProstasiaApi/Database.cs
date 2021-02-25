@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -40,6 +41,21 @@ namespace ProstasiaApi
         public static IMongoDatabase Getdb()
         {
             return dbClient.GetDatabase("Prostasia");
+        }
+
+        public static async Task CreateIdentity(Identity identity)
+        {
+            var db = dbClient.GetDatabase("Prostasia");
+            var collection = db.GetCollection<Identity>("Identities");
+            await collection.InsertOneAsync(identity);
+        }
+        
+        public static async Task<List<Identity>> GetIdentitiesByUsername(string username)
+        {
+            var db = dbClient.GetDatabase("Prostasia");
+            var collection = db.GetCollection<Identity>("Identities");
+            var filter = Builders<Identity>.Filter.Eq("ownerUsername", username);
+            return await collection.Find(filter).ToListAsync();
         }
     }
 }
