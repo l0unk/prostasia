@@ -29,11 +29,16 @@ namespace ProstasiaApi.Controllers
             return StatusCode(403);
         }
         
-        [Route("/api/test")]
+        [Route("/api/auth/logout")]
         [HttpGet]
-        public async Task<ActionResult> Test()
+        public async Task<ActionResult> Logout()
         {
-            return Ok("The test was successfully tested.");
+            string token = Request.Cookies["session"];
+            User user = SessionManager.Authenticate(token);
+            if (user == null) { return BadRequest(); }
+            SessionManager.DeleteToken(token); // delete token from sessionmanager
+            Response.Cookies.Delete("session"); // expire session cookie
+            return Ok();
         }
 
         [Route("/api/auth")]
