@@ -6,9 +6,19 @@ class Home extends Component {
         name: '',
         value: ''
     }
+
+    identities = [{
+            objectid: "nigga",
+            ownerUsername: "lek",
+            identityLabel: "epic label"
+        },{
+            ownerUsername: "lek",
+            identityLabel: "epic label"
+        }]
+
     constructor(props) {
         super(props);
-        this.state = {vars: null, variable: this.emptyVar};
+        this.state = {vars: null, variable: this.emptyVar, identities: this.identities};
     }
 
     componentDidMount() {
@@ -21,7 +31,14 @@ class Home extends Component {
                 Cookies.remove('session');
                 this.props.history.push('/');
             }
-        })
+        });
+        fetch('/api/identities/get')
+        .then(response => {
+            if(response.ok) {
+                response.json()
+                .then(data => this.setState({identities: data}));
+            }
+        });
     }
 
     handleChange = (event) => {
@@ -69,10 +86,16 @@ class Home extends Component {
             },
             body: JSON.stringify(testbody)
         })
+        .then(response => {
+            if(response.ok) {
+                response.json()
+                .then(data => console.log(data['']));
+            }
+        })
     }
 
     render() {
-        const {vars} = this.state;
+        const {vars, identities} = this.state;
         if(vars == null) {
             return (
                 <Container>
@@ -81,6 +104,17 @@ class Home extends Component {
                 </div>
             </Container>
             )
+        }
+        var identityList = null;
+        if(identities != null) {
+            identityList = identities.map(identity => {
+                return(
+                    <div>
+                        <p>{identity['ownerUsername']}</p>
+                        <p>{identity['identityLabel']}</p>
+                    </div>
+                )
+            });
         }
         const varstring = JSON.stringify(vars);
         return(
@@ -100,8 +134,8 @@ class Home extends Component {
                     <h1>Add Identity</h1>
                     <Input onSubmit={this.test}/>
                     <Button onClick={this.test} color="success">Submit</Button>
-
                 </Form>
+                {identityList}
             </Container>
         )
     }
