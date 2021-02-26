@@ -82,6 +82,7 @@ namespace ProstasiaApi.Controllers
 
             currentIdentity.identityLabel = updatedIdentity.identityLabel;
             currentIdentity.passwords.AddRange(updatedIdentity.passwords);
+            currentIdentity.secureNotes.AddRange(updatedIdentity.secureNotes);
 
             await Database.UpdateIdentity(currentIdentity);
 

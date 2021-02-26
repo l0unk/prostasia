@@ -10,6 +10,7 @@ namespace ProstasiaApi
         private string _identityLabel;
         private string _ownerUsername;
         private List<Password> _passwords;
+        private List<SecureNote> _secureNotes;
         
         public string identityLabel
         {
@@ -27,6 +28,12 @@ namespace ProstasiaApi
             get { return _passwords; }
             set { _passwords = value; }
         }
+        
+        public List<SecureNote> secureNotes
+        {
+            get { return _secureNotes; }
+            set { _secureNotes = value; }
+        }
 
         public Identity(string username, string label)
         {
@@ -34,12 +41,14 @@ namespace ProstasiaApi
             this.identityLabel = label;
             this.ownerUsername = username;
             this.passwords = new List<Password>();
+            this.secureNotes = new List<SecureNote>();
         }
         
         public Identity()
         {
             this._id = new ObjectId();
             this.passwords = new List<Password>();
+            this.secureNotes = new List<SecureNote>();
         }
     }
 }
