@@ -25,8 +25,8 @@ class PasswordModal extends Component {
             <Input readOnly="true" value={password.password}/>
             </ModalBody>
             <ModalFooter>
-            <Button color="primary" onClick={this.props.toggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
+            <Button color="primary" onClick={this.props.toggle}>Edit</Button>{' '}
+            <Button color="secondary" onClick={this.props.toggle}>Close</Button>
             </ModalFooter>
         </Modal>
       )  

@@ -37,7 +37,7 @@ class Identity extends Component {
             )
         }
         const passwordList = identities.map(identity => {
-            if(identity['identityLabel'] == this.props.match.params.id) {
+            if(identity['_id'] == this.props.match.params.id) {
                 return(
                     <ListGroup>{identity.passwords.map(password => {
                         return (
