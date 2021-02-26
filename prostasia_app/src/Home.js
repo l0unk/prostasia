@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
-import { Spinner, Container, Form, Label, Input, Button } from 'reactstrap';
+import { Spinner, Container, Form, Label, Input, Button, ListGroup, ListGroupItem } from 'reactstrap';
 import Cookies from 'js-cookie';
 class Home extends Component {
     emptyVar = {
         name: '',
         value: ''
+    }
+
+    emptyIdentity = {
+        identityLabel: ''
     }
 
     identities = [{
@@ -18,7 +22,7 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {vars: null, variable: this.emptyVar, identities: this.identities};
+        this.state = {vars: null, variable: this.emptyVar, identities: this.identities, identity: this.emptyIdentity};
     }
 
     componentDidMount() {
@@ -32,6 +36,10 @@ class Home extends Component {
                 this.props.history.push('/');
             }
         });
+        this.fetchIdentities();
+    }
+
+    fetchIdentities() {
         fetch('/api/identity/get')
         .then(response => {
             if(response.ok) {
@@ -73,25 +81,31 @@ class Home extends Component {
         })
     }
 
-    test = (event) => {
+    handleSubmitIdentity = (event) => {
         event.preventDefault();
-        const testbody = {
-            name : 'leks secret identity'
-        }
+        const {identity, identities} = this.state;
         fetch('/api/identity/create', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(testbody)
+            body: JSON.stringify(identity)
         })
         .then(response => {
             if(response.ok) {
-                response.json()
-                .then(data => console.log(data['']));
+                this.fetchIdentities();
             }
-        })
+        });
+    }
+
+    handleChangeIdentity = (event) => {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        let identity = {...this.state.identity};
+        identity[name] = value;
+        this.setState({identity});
     }
 
     render() {
@@ -108,11 +122,17 @@ class Home extends Component {
         var identityList = null;
         if(identities != null) {
             identityList = identities.map(identity => {
+                const passwords = identity.passwords != undefined ? identity.passwords : [];
                 return(
-                    <div>
-                        <p>{identity['ownerUsername']}</p>
-                        <p>{identity['identityLabel']}</p>
-                    </div>
+                        <ListGroupItem className="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p>{passwords.length} passwords</p>
+                                <p>{identity['identityLabel']}</p>
+                            </div>
+                            <div>
+                                <Button onClick={() => {this.props.history.push('/identity/' + identity['_id'])}} color="dark">View</Button>
+                            </div>
+                        </ListGroupItem>
                 )
             });
         }
@@ -130,12 +150,14 @@ class Home extends Component {
                     <Input onSubmit={this.handleSubmit} onChange={this.handleChange} name="value" placeholder="value"/>
                     <Button onClick={this.handleSubmit} color="success">Submit</Button>
                 </Form>
-                <Form>
+                <Form onSubmit={this.handleSubmitIdentity}>
                     <h1>Add Identity</h1>
-                    <Input onSubmit={this.test}/>
-                    <Button onClick={this.test} color="success">Submit</Button>
+                    <Input name="identityLabel" onChange={this.handleChangeIdentity}/>
+                    <Button type="submit" color="success">Submit</Button>
                 </Form>
-                {identityList}
+                <ListGroup>
+                    {identityList}
+                </ListGroup>
             </Container>
         )
     }
