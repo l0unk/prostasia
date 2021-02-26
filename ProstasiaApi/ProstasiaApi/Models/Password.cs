@@ -3,9 +3,9 @@ namespace ProstasiaApi
     public class Password
     {
         private string _site;
+        private string _nickname;
         private string _username;
         private string _password;
-        private string _email;
 
         public string site
         {
@@ -13,10 +13,10 @@ namespace ProstasiaApi
             set => _site = value;
         }
 
-        public string email
+        public string nickname
         {
-            get { return _email; }
-            set { _email = value; }
+            get { return _nickname; }
+            set { _nickname = value; }
         }
         
         public string username
@@ -30,12 +30,16 @@ namespace ProstasiaApi
             set { _password = value; }
         }
 
-        public Password(string site, string username, string password, string email)
+        public Password(string site, string username, string password, string nickname = "")
         {
             _site = site;
             _username = username;
             _password = password;
-            _email = email;
+            _nickname = nickname;
+        }
+        
+        public Password()
+        {
         }
     }
 }

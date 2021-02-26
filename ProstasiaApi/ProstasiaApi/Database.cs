@@ -57,5 +57,13 @@ namespace ProstasiaApi
             var filter = Builders<Identity>.Filter.Eq("ownerUsername", username);
             return await collection.Find(filter).ToListAsync();
         }
+
+        public static async Task UpdateIdentity(Identity identity)
+        {
+            var db = dbClient.GetDatabase("Prostasia");
+            var collection = db.GetCollection<Identity>("Identities");
+            var filter = Builders<Identity>.Filter.Eq("_id", identity._id);
+            await collection.FindOneAndReplaceAsync(filter, identity);
+        }
     }
 }

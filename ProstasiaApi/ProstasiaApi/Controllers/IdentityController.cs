@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using JsonConvert = Newtonsoft.Json.JsonConvert;
 
 namespace ProstasiaApi.Controllers
@@ -56,6 +58,34 @@ namespace ProstasiaApi.Controllers
             content.Content = JsonConvert.SerializeObject(identityList);
             content.ContentType = "application/json";
             return content;
+        }
+        
+        [Route("/api/identity/{id}/set")]
+        [HttpPost]
+        public async Task<ActionResult> UpdateIdentity([FromBody] Identity updatedIdentity, string id)
+        {
+            string token = Request.Cookies["session"];
+            User user = SessionManager.Authenticate(token);
+            
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            List<Identity> identityList = await Database.GetIdentitiesByUsername(user.username);
+            Identity currentIdentity = identityList.First(x => x._id == ObjectId.Parse(id));
+            
+            if (currentIdentity == null)
+            {
+                return BadRequest();
+            }
+
+            currentIdentity.identityLabel = updatedIdentity.identityLabel;
+            currentIdentity.passwords.AddRange(updatedIdentity.passwords);
+
+            await Database.UpdateIdentity(currentIdentity);
+
+            return Ok();
         }
     }
 }
