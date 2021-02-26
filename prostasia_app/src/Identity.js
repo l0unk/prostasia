@@ -7,7 +7,7 @@ import PasswordModal from "./PasswordModal";
 class Identity extends Component {
     constructor(props) {
         super(props);
-        this.state = {isLoading: true, identities: null, password: Array, open: false}
+        this.state = {isLoading: true, identities: null, password: Array, open: false, id: null}
     }
 
     componentDidMount = () => {
@@ -20,13 +20,13 @@ class Identity extends Component {
         })
     }
 
-    toggle = (password) => {
+    toggle = (password, id) => {
         const {open} = this.state;
-        this.setState({password: password, open: !open})
+        this.setState({password: password, open: !open, id: id})
         console.log(password);
     }
     render() {
-        const {isLoading, identities, open, password} = this.state;
+        const {isLoading, identities, open, password, id} = this.state;
         if(isLoading) {
             return(
                 <Container>
@@ -47,7 +47,7 @@ class Identity extends Component {
                                     <p class="mb-2 text-muted">{password.username}</p>
                                 </div>
                                 <Button onClick={() => {
-                                    this.toggle(password);
+                                    this.toggle(password, identity._id);
                                 }} color="dark">View</Button>
                             </ListGroupItem>
                         )
@@ -57,7 +57,7 @@ class Identity extends Component {
             }})
         return(
             <Container>
-                <PasswordModal password={password} open={open} toggle={this.toggle}/>
+                <PasswordModal id={id} password={password} open={open} toggle={this.toggle}/>
                 <h1>ziek neef</h1>
                 {passwordList}
                 <p>{'' + open}</p>
