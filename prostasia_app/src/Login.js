@@ -41,7 +41,8 @@ class Login extends Component {
         this.setState({user});
     }
 
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        event.preventDefault(true);
         const {user} = this.state;
         fetch('/api/auth/login', {
             method: 'POST',
@@ -80,12 +81,12 @@ class Login extends Component {
         }
         return(
         <Container>
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
                 <Label for="username">Username:</Label>
-                <Input onSubmit={this.handleSubmit} onChange={this.handleChange} type="text" name="username" placeholder="username"/>
+                <Input onChange={this.handleChange} type="text" name="username" placeholder="username"/>
                 <Label for="password">Password:</Label>
-                <Input onSubmit={this.handleSubmit} onChange={this.handleChange} type="password" name="password" placeholder="password"/>
-                <Button onClick={this.handleSubmit} className="mt-3" color="success">Log in</Button>
+                <Input onChange={this.handleChange} type="password" name="password" placeholder="password"/>
+                <Button type="submit" className="mt-3" color="success">Log in</Button>
             </Form>
             <p class="text-danger">{error}</p>
         </Container>

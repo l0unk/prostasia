@@ -32,7 +32,7 @@ class Home extends Component {
                 this.props.history.push('/');
             }
         });
-        fetch('/api/identities/get')
+        fetch('/api/identity/get')
         .then(response => {
             if(response.ok) {
                 response.json()
