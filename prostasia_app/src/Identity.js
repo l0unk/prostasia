@@ -52,6 +52,12 @@ class Identity extends Component {
         this.setState({password: this.emptyPassword, opennew: !opennew, id: id})
     }
 
+    updateIdentity = (password) => {
+        var {identity} = this.state;
+        identity.passwords.push(password);
+        this.setState({identity: identity});
+    }
+
     render() {
         const {isLoading, open, password, id, identity, opennew} = this.state;
         if(isLoading) {
@@ -98,7 +104,7 @@ class Identity extends Component {
             <Container>
                 <PasswordModal id={id} password={password} open={open} toggle={this.toggle}/>
                 <h1>{identity == null ? "" : identity.identityLabel}</h1>
-                <PasswordModal newpassword={opennew} id={id} password={this.emptyPassword} open={opennew} toggle={this.toggleNew}/>
+                <PasswordModal update={this.updateIdentity} newpassword={opennew} id={id} password={this.emptyPassword} open={opennew} toggle={this.toggleNew}/>
                 <Button onClick={() => {
                             this.toggleNew(identity._id);
                         }} color="dark">Add password</Button>

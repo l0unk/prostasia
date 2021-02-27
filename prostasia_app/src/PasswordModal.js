@@ -30,7 +30,7 @@ class PasswordModal extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        var {password} = this.state;
+        var {password, stateidentity} = this.state;
         const {newpassword} = this.props;
         if(!newpassword) {
             password._id = this.props.password._id;
@@ -44,6 +44,23 @@ class PasswordModal extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(identity)
+        })
+        .then(response => {
+            if(response.ok) {
+                //do shit
+                if(newpassword) {
+                    response.json()
+                    .then(data => {
+                        const password = data[0];
+                        this.props.update(password);
+                        this.props.toggle();
+                    })
+                }
+            } else if(response.status == 403) {
+                this.props.history.push('/');
+            } else {
+                //error handling
+            }
         });
     }
 

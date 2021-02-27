@@ -125,7 +125,7 @@ class Home extends Component {
             identityList = identities.map(identity => {
                 const passwords = identity.passwords != undefined ? identity.passwords : [];
                 return(
-                        <ListGroupItem className="d-flex justify-content-between align-items-center">
+                        <ListGroupItem className="d-flex justify-content-between align-items-center" action>
                             <div>
                                 <p>{passwords.length} passwords</p>
                                 <p>{identity['identityLabel']}</p>
