@@ -81,8 +81,12 @@ namespace ProstasiaApi.Controllers
                 return BadRequest();
             }
 
-            currentIdentity.identityLabel = updatedIdentity.identityLabel;
-            foreach (var password in updatedIdentity.passwords)
+            if (updatedIdentity.identityLabel != null) // Update identity label
+            {
+                currentIdentity.identityLabel = updatedIdentity.identityLabel;   
+            }
+
+            foreach (var password in updatedIdentity.passwords) // Update passwords
             {
                 var pass = currentIdentity.passwords.Where(x => x._id == password._id);
                 if (pass.Any())
@@ -103,7 +107,28 @@ namespace ProstasiaApi.Controllers
                     currentIdentity.passwords.Add(password);
                 }
             }
-            currentIdentity.secureNotes.AddRange(updatedIdentity.secureNotes);
+            
+            foreach (var note in updatedIdentity.secureNotes) // Update secure notes
+            {
+                var pass = currentIdentity.secureNotes.Where(x => x._id == note._id); // get note with same id
+                if (pass.Any()) // if it exists
+                {
+                    var obj = currentIdentity.secureNotes[currentIdentity.secureNotes.IndexOf(pass.First())];
+                    Console.WriteLine(note.GetType().GetProperties().First().ToString());
+                    foreach (var prop in note.GetType().GetProperties())
+                    {
+                        var value = prop.GetValue(note);
+                        if (value != null)
+                        {
+                            prop.SetValue(obj, value);
+                        }
+                    }
+                }
+                else
+                {
+                    currentIdentity.secureNotes.Add(note);
+                }
+            }
 
             await Database.UpdateIdentity(currentIdentity);
 
