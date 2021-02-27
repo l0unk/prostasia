@@ -66,6 +66,7 @@ namespace ProstasiaApi.Controllers
         public async Task<ActionResult> UpdateIdentity([FromBody] Identity updatedIdentity, string id)
         {
             string token = Request.Cookies["session"];
+            List<Object> created = new List<Object>();
             User user = SessionManager.Authenticate(token);
             
             if (user == null)
@@ -105,6 +106,8 @@ namespace ProstasiaApi.Controllers
                 else
                 {
                     currentIdentity.passwords.Add(password);
+                    created.Add(password);
+                    
                 }
             }
             
@@ -127,11 +130,17 @@ namespace ProstasiaApi.Controllers
                 else
                 {
                     currentIdentity.secureNotes.Add(note);
+                    created.Add(note);
                 }
             }
 
             await Database.UpdateIdentity(currentIdentity);
 
+            if (created.Any())
+            {
+                return Ok(created);
+            }
+            
             return Ok();
         }
     }
