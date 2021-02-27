@@ -141,7 +141,7 @@ namespace ProstasiaApi.Controllers
                 return Ok(created);
             }
             
-            return BadRequest();
+            return Ok();
         }
     }
 }
