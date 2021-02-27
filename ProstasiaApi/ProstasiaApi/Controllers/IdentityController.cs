@@ -87,7 +87,16 @@ namespace ProstasiaApi.Controllers
                 var pass = currentIdentity.passwords.Where(x => x._id == password._id);
                 if (pass.Any())
                 {
-                    currentIdentity.passwords[currentIdentity.passwords.IndexOf(pass.First())] = password;
+                    var obj = currentIdentity.passwords[currentIdentity.passwords.IndexOf(pass.First())];
+                    Console.WriteLine(password.GetType().GetProperties().First().ToString());
+                    foreach (var prop in password.GetType().GetProperties())
+                    {
+                        var value = prop.GetValue(password);
+                        if (value != null)
+                        {
+                            prop.SetValue(obj, value);
+                        }
+                    }
                 }
                 else
                 {
