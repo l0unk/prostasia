@@ -12,61 +12,11 @@ class PasswordModal extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {password: this.emptyPassword, identity: this.emptyIdentity, open: this.props.open, readonly: true, buttontext: "Edit", updating: false, newpassword: false}
+        this.state = {readonly: false, password: this.emptyPassword, buttonlabel: "Edit", newpassword: true, nickname: this.props.password.nickname};
     }
 
     componentDidMount = () => {
-        let {password, newpassword } = this.state;
-        console.log(this.props.password == this.emptyPassword);
-        if(this.props.password == this.emptyPassword) {
-            this.setState({readonly: false, buttontext: "Submit", newpassword: true});
-        } else {
-            this.setState({readonly: true, buttontext: "Edit", newpassword: false});
-        }
-        password['_id'] = !newpassword ? this.props.passwordid : "";
-        this.setState({password: password});
-        console.log(password);
-    }
-
-    toggle = () => {
-        const open = this.props.open;
-        this.props.open = !open;
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const {readonly, updating, password, identity} = this.state;
-        if(updating) {
-            return;
-        }
-        if(!readonly) {
-            if(password == this.emptyPassword) {
-                //handle this
-                console.log('please do shit mate');
-                return;
-            }
-            identity.passwords.push(password);
-            const spinner = <div>Updating... <Spinner size="sm"/></div>;
-            this.setState({buttontext: spinner, updating: true})
-            fetch('/api/identity/' + this.props.id + '/set', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(identity)
-            })
-            .then(response => {
-                this.setState({buttontext: "Edit", updating: false, identity: this.emptyIdentity, password: this.emptyPassword});
-                if(response.ok) {
-                    return;
-                }
-            })
-        } else {
-            this.setState({buttontext: "Submit"})
-        }
-        this.setState({readonly: !readonly})
-    }
+    } 
 
     handleChange = (event) => {
         const target = event.target;
@@ -75,23 +25,51 @@ class PasswordModal extends Component {
         let password = {...this.state.password};
         password[name] = value;
         this.setState({password});
-        console.log(password);
+        console.log(JSON.stringify(password));
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        var {password} = this.state;
+        const {newpassword} = this.props;
+        if(!newpassword) {
+            password._id = this.props.password._id;
+        }
+        var identity = this.emptyIdentity;
+        identity.passwords.push(password);
+        fetch('/api/identity/' + this.props.id + '/set', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(identity)
+        });
+    }
+
+    updatenickname = (event) => {
+        this.handleChange(event);
+        this.setState({nickname: event.target.value});
     }
 
     close = () => {
-        this.setState({identity: this.emptyIdentity, password: this.emptyPassword});
+        this.setState({readonly: false, password: this.emptyPassword, buttonlabel: "Edit", newpassword: true, nickname: this.props.password.nickname});
     }
 
     render() {
-      const password = this.props.password;
-      const open = this.props.open;
-      const {readonly, buttontext, newpassword} = this.state;
-      console.log(newpassword);
+        const {readonly, buttonlabel} = this.state;
+        var {nickname} = this.state;
+        if(nickname == undefined) {
+            nickname = this.props.password.nickname;
+        }
+        const {newpassword, password} = this.props;
       return(
-        <Modal onClosed={this.close} isOpen={open} toggle={this.props.toggle}>
-            <ModalHeader toggle={this.props.toggle}>{!newpassword ? password.site : "Add password"}</ModalHeader>
+        <Modal onClosed={this.close} isOpen={this.props.open} toggle={this.props.toggle}>
+            <ModalHeader toggle={this.props.toggle}>{newpassword ? "Add new password" : nickname}</ModalHeader>
             <Form onSubmit={this.handleSubmit}>
                 <ModalBody>
+                <Label>Nickname:</Label>
+                <Input name="nickname" onChange={this.updatenickname} readOnly={readonly} defaultValue={password.nickname}/>
                 <Label>Site name:</Label>
                 <Input name="site" onChange={this.handleChange} readOnly={readonly} defaultValue={password.site}/>
                 <Label>Username:</Label>
@@ -100,7 +78,7 @@ class PasswordModal extends Component {
                 <Input name="password" onChange={this.handleChange} readOnly={readonly} defaultValue={password.password}/>
                 </ModalBody>
                 <ModalFooter>
-                <Button type="submit" color="primary">{buttontext}</Button>
+                <Button type="submit" color="primary">{buttonlabel}</Button>
                 <Button color="secondary" onClick={this.props.toggle}>Close</Button>
                 </ModalFooter>
             </Form>
