@@ -130,7 +130,10 @@ class Home extends Component {
                                 <p>{identity['identityLabel']}</p>
                             </div>
                             <div>
-                                <Button onClick={() => {this.props.history.push('/identity/' + identity['_id'])}} color="dark">View</Button>
+                                <Button onClick={() => {this.props.history.push({
+                                pathname: '/identity/' + identity['_id'],
+                                state: { identity: identity }
+                                })}} color="dark">View</Button>
                             </div>
                         </ListGroupItem>
                 )

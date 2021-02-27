@@ -1,3 +1,4 @@
+import { isEmptyObject } from 'jquery';
 import React, { Component } from 'react';
 import {Modal, ModalBody, ModalFooter, ModalHeader, Button, Input, Label, Form, Spinner} from 'reactstrap';
 
@@ -11,7 +12,20 @@ class PasswordModal extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {password: this.emptyPassword, identity: this.emptyIdentity, open: this.props.open, readonly: true, buttontext: "Edit", updating: false}
+        this.state = {password: this.emptyPassword, identity: this.emptyIdentity, open: this.props.open, readonly: true, buttontext: "Edit", updating: false, newpassword: false}
+    }
+
+    componentDidMount = () => {
+        let {password, newpassword } = this.state;
+        console.log(this.props.password == this.emptyPassword);
+        if(this.props.password == this.emptyPassword) {
+            this.setState({readonly: false, buttontext: "Submit", newpassword: true});
+        } else {
+            this.setState({readonly: true, buttontext: "Edit", newpassword: false});
+        }
+        password['_id'] = !newpassword ? this.props.passwordid : "";
+        this.setState({password: password});
+        console.log(password);
     }
 
     toggle = () => {
@@ -64,15 +78,22 @@ class PasswordModal extends Component {
         console.log(password);
     }
 
+    close = () => {
+        this.setState({identity: this.emptyIdentity, password: this.emptyPassword});
+    }
+
     render() {
       const password = this.props.password;
       const open = this.props.open;
-      const {readonly, buttontext} = this.state;
+      const {readonly, buttontext, newpassword} = this.state;
+      console.log(newpassword);
       return(
-        <Modal isOpen={open} toggle={this.props.toggle}>
-            <ModalHeader toggle={this.props.toggle}>{password.site}</ModalHeader>
+        <Modal onClosed={this.close} isOpen={open} toggle={this.props.toggle}>
+            <ModalHeader toggle={this.props.toggle}>{!newpassword ? password.site : "Add password"}</ModalHeader>
             <Form onSubmit={this.handleSubmit}>
                 <ModalBody>
+                <Label>Site name:</Label>
+                <Input name="site" onChange={this.handleChange} readOnly={readonly} defaultValue={password.site}/>
                 <Label>Username:</Label>
                 <Input name="username" onChange={this.handleChange} readOnly={readonly} defaultValue={password.username}/>
                 <Label>Password:</Label>
