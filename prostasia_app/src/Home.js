@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Spinner, Container, Form, Label, Input, Button, ListGroup, ListGroupItem } from 'reactstrap';
 import Cookies from 'js-cookie';
+import AppNavbar from './AppNavbar';
 class Home extends Component {
     emptyVar = {
         name: '',
@@ -141,27 +142,29 @@ class Home extends Component {
         }
         const varstring = JSON.stringify(vars);
         return(
-            <Container>
-                <p>
-                    {varstring}
-                </p>
-                <Form>
-                    <h1>Add session variable</h1>
-                    <Label>Variable name</Label>
-                    <Input onSubmit={this.handleSubmit} onChange={this.handleChange} name="name" placeholder="name"/>
-                    <Label>Variable value</Label>
-                    <Input onSubmit={this.handleSubmit} onChange={this.handleChange} name="value" placeholder="value"/>
-                    <Button onClick={this.handleSubmit} color="success">Submit</Button>
-                </Form>
-                <Form onSubmit={this.handleSubmitIdentity}>
-                    <h1>Add Identity</h1>
-                    <Input name="identityLabel" onChange={this.handleChangeIdentity}/>
-                    <Button type="submit" color="success">Submit</Button>
-                </Form>
-                <ListGroup>
-                    {identityList}
-                </ListGroup>
-            </Container>
+            <div>
+                <Container>
+                    <p>
+                        {varstring}
+                    </p>
+                    <Form>
+                        <h1>Add session variable</h1>
+                        <Label>Variable name</Label>
+                        <Input onSubmit={this.handleSubmit} onChange={this.handleChange} name="name" placeholder="name"/>
+                        <Label>Variable value</Label>
+                        <Input onSubmit={this.handleSubmit} onChange={this.handleChange} name="value" placeholder="value"/>
+                        <Button onClick={this.handleSubmit} color="success">Submit</Button>
+                    </Form>
+                    <Form onSubmit={this.handleSubmitIdentity}>
+                        <h1>Add Identity</h1>
+                        <Input name="identityLabel" onChange={this.handleChangeIdentity}/>
+                        <Button type="submit" color="success">Submit</Button>
+                    </Form>
+                    <ListGroup>
+                        {identityList}
+                    </ListGroup>
+                </Container>
+            </div>
         )
     }
 }

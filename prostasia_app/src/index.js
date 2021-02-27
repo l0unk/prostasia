@@ -4,9 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AppNavbar from './AppNavbar';
+import { withRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
+    <AppNavbar/>
     <App />
   </React.StrictMode>,
   document.getElementById('root')
