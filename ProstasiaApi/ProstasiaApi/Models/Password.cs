@@ -1,7 +1,10 @@
+using MongoDB.Bson;
+
 namespace ProstasiaApi
 {
     public class Password
     {
+        public string _id { get; set; }
         private string _site;
         private string _nickname;
         private string _username;
@@ -30,8 +33,16 @@ namespace ProstasiaApi
             set { _password = value; }
         }
 
-        public Password(string site, string username, string password, string nickname = "")
+        public Password(string site, string username, string password, string nickname = "", string id = "")
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                this._id = ObjectId.GenerateNewId().ToString();
+            }
+            else
+            {
+                this._id = id;
+            }
             _site = site;
             _username = username;
             _password = password;
@@ -40,6 +51,10 @@ namespace ProstasiaApi
         
         public Password()
         {
+            if (string.IsNullOrWhiteSpace(this._id))
+            {
+                this._id = ObjectId.GenerateNewId().ToString();
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,7 +82,18 @@ namespace ProstasiaApi.Controllers
             }
 
             currentIdentity.identityLabel = updatedIdentity.identityLabel;
-            currentIdentity.passwords.AddRange(updatedIdentity.passwords);
+            foreach (var password in updatedIdentity.passwords)
+            {
+                var pass = currentIdentity.passwords.Where(x => x._id == password._id);
+                if (pass.Any())
+                {
+                    currentIdentity.passwords[currentIdentity.passwords.IndexOf(pass.First())] = password;
+                }
+                else
+                {
+                    currentIdentity.passwords.Add(password);
+                }
+            }
             currentIdentity.secureNotes.AddRange(updatedIdentity.secureNotes);
 
             await Database.UpdateIdentity(currentIdentity);
