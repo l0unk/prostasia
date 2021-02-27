@@ -79,24 +79,26 @@ class Identity extends Component {
 
             const passwordList = identity.passwords.map(password => {
                 return (
-                    <Card>
-                        <Row>
-                            <Col className="mx-auto d-flex align-items-center" md="2">
-                                <CardImg width="100%" src={"https://icons.bitwarden.net/" + password.site + "/icon.png"} alt="Card image cap" />
-                            </Col>
-                            <Col md="8">
-                                <CardBody>
-                                <CardTitle tag="h5">{password.nickname}</CardTitle>
-                                <CardSubtitle tag="h6" className="text-muted">{password.site}</CardSubtitle>
-                                <CardText >{password.username}</CardText>
-                                <Button onClick={() => {
-                                        this.toggle(password, identity._id);
-                                    }} color="dark">View
-                                </Button>
-                                </CardBody>
-                            </Col>
-                        </Row>
-                    </Card>
+                    <Col md="4">
+                        <Card>
+                            <Row>
+                                <Col className="mx-auto d-flex align-items-center" md="2">
+                                    <CardImg width="100%" src={"https://icons.bitwarden.net/" + password.site + "/icon.png"} alt="Card image cap" />
+                                </Col>
+                                <Col md="8">
+                                    <CardBody>
+                                    <CardTitle tag="h5">{password.nickname}</CardTitle>
+                                    <CardSubtitle tag="h6" className="text-muted">{password.site}</CardSubtitle>
+                                    <CardText >{password.username}</CardText>
+                                    <Button onClick={() => {
+                                            this.toggle(password, identity._id);
+                                        }} color="dark">View
+                                    </Button>
+                                    </CardBody>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
                 )
             })
             console.log(opennew);
@@ -108,9 +110,9 @@ class Identity extends Component {
                 <Button onClick={() => {
                             this.toggleNew(identity._id);
                         }} color="dark">Add password</Button>
-                <CardColumns>
+                <Row>
                     {passwordList}
-                </CardColumns>
+                </Row>
                 <p>{'' + open}</p>
             </Container>
         )
