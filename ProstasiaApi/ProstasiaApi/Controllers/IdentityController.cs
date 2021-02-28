@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -51,7 +52,7 @@ namespace ProstasiaApi.Controllers
             
             if (user == null)
             {
-                return BadRequest();
+                return StatusCode(403);
             }
 
             List<Identity> identityList = await Database.GetIdentitiesByUsername(user.username);
@@ -71,7 +72,7 @@ namespace ProstasiaApi.Controllers
             
             if (user == null)
             {
-                return BadRequest();
+                return StatusCode(403);
             }
 
             List<Identity> identityList = await Database.GetIdentitiesByUsername(user.username);
