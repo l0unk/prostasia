@@ -144,5 +144,24 @@ namespace ProstasiaApi.Controllers
             
             return Ok();
         }
+        
+        [Route("/api/identity/{id}/replace")]
+        [HttpPost]
+        public async Task<ActionResult> ReplaceIdentity([FromBody] Identity updatedIdentity, string id)
+        {
+            string token = Request.Cookies["session"];
+            User user = SessionManager.Authenticate(token);
+            
+            if (user == null)
+            {
+                return StatusCode(403);
+            }
+
+            updatedIdentity._id = ObjectId.Parse(id);
+
+            await Database.UpdateIdentity(updatedIdentity);
+
+            return Ok();
+        }
     }
 }
